@@ -1,0 +1,30 @@
+{
+	"folders": {},
+	"connections": {
+		"sqlite_jdbc-17aa45d1b11-1cce575e5aecac5e": {
+			"provider": "generic",
+			"driver": "sqlite_jdbc",
+			"name": "JXLM_DB.db",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"database": "/home/jesusxd88/ProyectosJava/JXLibraryManager/src/JXLM_DB.db",
+				"url": "jdbc:sqlite:/home/jesusxd88/ProyectosJava/JXLibraryManager/src/JXLM_DB.db",
+				"type": "dev",
+				"auth-model": "native",
+				"handlers": {}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}
