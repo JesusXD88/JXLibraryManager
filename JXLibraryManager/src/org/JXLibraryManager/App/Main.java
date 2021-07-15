@@ -18,13 +18,18 @@ package org.JXLibraryManager.App;
 
 import java.util.Scanner;
 
+/**
+ * Clase Principal (Main)
+ * @author jesusxd88
+ *
+ */
 public class Main {
 
 	private static GestionBiblioteca lib = new GestionBiblioteca(); //Biblioteca
 	
 	/**
 	 * Main
-	 * @param args
+	 * @param args Main args
 	 */
 	public static void main(String[] args) {
 		
@@ -66,7 +71,7 @@ public class Main {
 			System.exit(0);
 		}
 		
-		
+		scan.close();
 	}
 	
 	/**
@@ -99,10 +104,16 @@ public class Main {
 		case 2:
 			modificarLibro(null, null);
 			break;
+		case 3:
+			eliminarLibro();
+			break;
 		case 4:
 			main(null);
 			break;
+		default:
+			break;
 		}
+		scan.close();
 	}
 	
 	/**
@@ -148,14 +159,15 @@ public class Main {
 				anadirLibro();
 			}
 		} while (ver != "si" || ver != "no");
+		scan.close();
 	}
 	
 	/**
 	 * Método que se encarga del asistente para modificar libro.
 	 * Si se llama desde el main se le pasa (null,null) ya que al incluir la opción de modificar varios campos
 	 * se vuelve a pasar por parámetro el libro que se está modificando y el ISBN original.
-	 * @param libro
-	 * @param ISBN
+	 * @param libro Libro
+	 * @param ISBN El ISBN del Libro
 	 */
 	public static void modificarLibro(Libro libro, String ISBN) {
 		Scanner scan = new Scanner(System.in);
@@ -311,8 +323,59 @@ public class Main {
 				gestionarLibros();
 			}
 		} while (cambios != "si" || cambios != "no");
+		scan.close();
 	}
 	
+	/**
+	 * Método que contiene el asistente para eliminar libros
+	 */
+	public static void eliminarLibro() {
+		Scanner scan = new Scanner(System.in);
+		String ISBN;
+		System.out.println();
+		System.out.println();
+		System.out.println("---------------------------------------");
+		System.out.println("\n\nIntroduce a continuación el ISBN del libro a eliminar:\n");
+		System.out.print("=> ");
+		ISBN = scan.nextLine();
+		while (ISBN.length() != 13 || !isNumeric(ISBN)) {
+			System.out.println("Introduce un ISBN válido");
+			System.out.print("ISBN: ");
+			ISBN = scan.nextLine();
+		}
+		
+		Libro libro = lib.retrieveLibroPorISBN(ISBN);
+		if (libro != null) {
+			System.out.println("\nEl libro correspondiente al ISBN introducido es:\n");
+			System.out.println(libro.toString());
+		} else {
+			String v;
+			do {
+				System.out.println("\nEl ISBN introducido no es correcto.");
+				System.out.println("\n¿Deseas volver a intentarlo?(si/no)\n");
+				System.out.print("=> ");
+				v = scan.nextLine();
+				if (v.equals("si")) {
+					modificarLibro(null, ISBN);
+				} else if (v.equals("no")) {
+					gestionarLibros();
+				}
+			} while (v != "si" || v != "no");
+		}
+		String a;
+		do {
+			System.out.println("\n¿Deseas eliminarlo?(si/no)");
+			System.out.print("=> ");
+			a = scan.nextLine();
+			if (a.equals("si")) {
+				lib.eliminarLibro(libro);
+				gestionarLibros();
+			} else if (a.equals("no")) {
+				gestionarLibros();
+			}
+		} while (a != "si" || a != "no");	
+		scan.close();
+	}
 	
 	/**
 	 * Método de clase que sirve para verificar si un String determinado es un número

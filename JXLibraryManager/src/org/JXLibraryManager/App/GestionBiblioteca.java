@@ -18,6 +18,11 @@ package org.JXLibraryManager.App;
 
 import java.sql.*;
 
+/**
+ * Clase que se encarga de interactuar con la base de datos, gestionando la biblioteca de libros.
+ * @author jesusxd88
+ *
+ */
 public class GestionBiblioteca {
 	
 	private Connection con = null; //Objeto conexion
@@ -52,7 +57,7 @@ public class GestionBiblioteca {
 	
 	/**
 	 * Método para insertar libros en la biblioteca
-	 * @param libro
+	 * @param libro Libro
 	 * @return boolean
 	 */
 	public boolean insertarLibro(Libro libro) {
@@ -81,8 +86,8 @@ public class GestionBiblioteca {
 	
 	/**
 	 * Método para modificar los libros
-	 * @param libro
-	 * @param ISBN
+	 * @param libro Libro
+	 * @param ISBN El ISBN del Libro
 	 * @return boolean
 	 */
 	public boolean modificarLibro(Libro libro, String ISBN) {
@@ -92,10 +97,13 @@ public class GestionBiblioteca {
 				+ "', Autor = '" + libro.getAutor()
 				+ "', Genero = '" + libro.getGenero()
 				+ "', Tematica = '" + libro.getTematica()
-				+ "' WHERE ISBN = " + ISBN;	
+				+ "' WHERE ISBN = " + ISBN + ";";	
+		String query2 = "UPDATE Biblioteca SET"
+				+ "ISBN = " + libro.getISBN() 
+				+ "WHERE ISBN = " + ISBN + ";";
 		try {
 			stmt.executeUpdate(query);
-			
+			stmt.executeUpdate(query2);
 		} catch (Exception e) {
 			System.out.println("No se ha podido modificar el libro!");
 			System.err.println( e.getClass().getName() + ": " + e.getMessage());
@@ -106,8 +114,28 @@ public class GestionBiblioteca {
 	}
 	
 	/**
+	 * Método para eliminar un libro de la biblioteca
+	 * @param libro Libro
+	 * @return boolean
+	 */
+	public boolean eliminarLibro(Libro libro) {
+		String query = "DELETE FROM Libros WHERE ISBN = " + libro.getISBN() + ";";
+		String query2 = "DELETE FROM Biblioteca WHERE ISBN = " + libro.getISBN() + ";";
+		try {
+			stmt.executeUpdate(query);
+			stmt.executeUpdate(query2);
+		} catch (Exception e) {
+			System.out.println("No se ha podido eliminar el libro!");
+			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			return false;
+		}
+		System.out.println("El libro se ha eliminado con exito!");
+		return true;
+	}
+	
+	/**
 	 * Método que busca un libro por ISBN y lo devuelve
-	 * @param ISBN
+	 * @param ISBN El ISBN del Libro
 	 * @return Libro
 	 */
 	public Libro retrieveLibroPorISBN(String ISBN) {

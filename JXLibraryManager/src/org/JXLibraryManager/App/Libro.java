@@ -16,6 +16,11 @@
 
 package org.JXLibraryManager.App;
 
+/**
+ * Clase auxiliar Libro que servirá para crear objetos de tipo Libro
+ * @author jesusxd88
+ *
+ */
 public class Libro {
 
 	private String ISBN;
@@ -26,11 +31,11 @@ public class Libro {
 	
 	/**
 	 * Constructor de Libro
-	 * @param ISBN
-	 * @param nombre
-	 * @param autor
-	 * @param genero
-	 * @param tematica
+	 * @param ISBN El ISBN del Libro
+	 * @param nombre El Nombre del Libro
+	 * @param autor El Autor del Libro
+	 * @param genero El Género del Libro (Novela, Poesía, Teatro...) 
+	 * @param tematica La temática del Libro (Ciencia-Ficción, Fantasía, Aventuras, Policiaca...)
 	 */
 	public Libro (String ISBN, String nombre, String autor, String genero, String tematica) {
 		this.ISBN = ISBN;
@@ -49,7 +54,7 @@ public class Libro {
 		return this.ISBN;
 	}
 	/**
-	 * @param ISBN
+	 * @param ISBN El ISBN del Libro
 	 */
 	public void setISBN(String ISBN) {
 		this.ISBN = ISBN;
@@ -61,7 +66,7 @@ public class Libro {
 		return this.nombre;
 	}
 	/**
-	 * @param nombre
+	 * @param nombre El Nombre del Libro
 	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
@@ -73,7 +78,7 @@ public class Libro {
 		return this.autor;
 	}
 	/**
-	 * @param autor
+	 * @param autor El Autor del Libro
 	 */
 	public void setAutor(String autor) {
 		this.autor = autor;
@@ -85,7 +90,7 @@ public class Libro {
 		return this.genero;
 	}
 	/**
-	 * @param genero
+	 * @param genero El Género del Libro (Novela, Poesía, Teatro...)
 	 */
 	public void setGenero(String genero) {
 		this.genero = genero;
@@ -97,7 +102,7 @@ public class Libro {
 		return this.tematica;
 	}
 	/**
-	 * @param tematica
+	 * @param tematica La temática del Libro (Ciencia-Ficción, Fantasía, Aventuras, Policiaca...)
 	 */
 	public void setTematica(String tematica) {
 		this.tematica = tematica;
