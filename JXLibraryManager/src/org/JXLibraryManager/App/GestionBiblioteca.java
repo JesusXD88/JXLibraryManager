@@ -99,8 +99,8 @@ public class GestionBiblioteca {
 				+ "', Tematica = '" + libro.getTematica()
 				+ "' WHERE ISBN = " + ISBN + ";";	
 		String query2 = "UPDATE Biblioteca SET"
-				+ "ISBN = " + libro.getISBN() 
-				+ "WHERE ISBN = " + ISBN + ";";
+				+ " ISBN = " + libro.getISBN() 
+				+ " WHERE ISBN = " + ISBN + ";";
 		try {
 			stmt.executeUpdate(query);
 			stmt.executeUpdate(query2);
