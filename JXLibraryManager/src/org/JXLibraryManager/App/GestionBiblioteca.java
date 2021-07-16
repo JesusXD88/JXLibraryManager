@@ -18,6 +18,7 @@ package org.JXLibraryManager.App;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 /**
  * Clase que se encarga de interactuar con la base de datos, gestionando la biblioteca de libros.
@@ -134,7 +135,7 @@ public class GestionBiblioteca {
 		return true;
 	}
 	
-	//Devolver todo el inventario de libros
+	
 	
 	/**
 	 * Método que devuelve todo el inventario de libros
@@ -159,6 +160,35 @@ public class GestionBiblioteca {
 		}
 		return lista;
 	}
+	
+	//Devolver toda la biblioteca
+	
+	/**
+	 * Método que devuelve todos los libros de la biblioteca en un mapa.
+	 * @return TreeMap de libros - fechas.
+	 */
+	public TreeMap<Libro, ArrayList<String>> getBiblioteca() {
+		String query = "SELECT Biblioteca.ISBN, Libros.Nombre, Libros.Autor, Libros.Genero, Libros.Tematica, Biblioteca.FechaAnadido, Biblioteca.FechaDevolucion FROM Biblioteca INNER JOIN Libros ON Biblioteca.ISBN = Libros.ISBN;";
+		ResultSet result;
+		boolean checker = false;
+		TreeMap<Libro, ArrayList<String>> biblioteca = new TreeMap<Libro, ArrayList<String>>();
+		try {
+			result = stmt.executeQuery(query);
+			while (result.next()) {
+				ArrayList<String> lista = new ArrayList<String>();
+				lista.add(result.getString("FechaAnadido"));
+				lista.add(result.getString("FechaDevolucion"));
+				biblioteca.put(new Libro(result.getString("ISBN"), result.getString("Nombre"), result.getString("Autor"), result.getString("Genero"), result.getString("Tematica")), lista);
+				checker = true;
+			}
+			if (checker == false) return null;
+		} catch (Exception e) {
+			System.out.println("No se ha encontrado el libro!");
+			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			return null;
+		}
+		return biblioteca;
+	} 
 	
 	/**
 	 * Método que busca un libro por ISBN y lo devuelve
