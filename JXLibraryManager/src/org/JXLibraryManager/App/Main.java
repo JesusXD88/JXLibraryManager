@@ -16,6 +16,7 @@
 
 package org.JXLibraryManager.App;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -87,7 +88,8 @@ public class Main {
 			System.out.println("1. Añadir libros a la biblioteca.");
 			System.out.println("2. Modificar libros de la biblioteca.");
 			System.out.println("3. Eliminar libros de la biblioteca.");
-			System.out.println("4. Volver al menú principal.\n");
+			System.out.println("4. Mostrar todo el inventario de libros.\n");
+			System.out.println("5. Volver al menú principal.\n");
 			System.out.print("=> ");
 			try {
 				opcion2 = Integer.parseInt(scan.nextLine());
@@ -95,7 +97,7 @@ public class Main {
 				System.out.println("\nIntroduce un número válido\n");
 				opcion2 = 0;
 			}
-		} while (opcion2 < 1 || opcion2 > 4);
+		} while (opcion2 < 1 || opcion2 > 5);
 		
 		switch (opcion2) {
 		case 1: 
@@ -108,6 +110,9 @@ public class Main {
 			eliminarLibro();
 			break;
 		case 4:
+			inventarioLibros();
+			break;
+		case 5:
 			main(null);
 			break;
 		default:
@@ -374,6 +379,31 @@ public class Main {
 				gestionarLibros();
 			}
 		} while (a != "si" || a != "no");	
+		scan.close();
+	}
+	
+	public static void inventarioLibros() {
+		Scanner scan = new Scanner(System.in);
+		ArrayList<Libro> lista = lib.getInventarioLibros();
+		if (lista == null) {
+			System.out.println("\nNo existe ningún libro en el inventario todavía.\nPor favor, inserta primeramente un libro\n");
+			gestionarLibros();
+		}
+		System.out.println("\nEl inventario de libros se muestra a continuación:\n");
+		for (Libro libro : lista) {
+			System.out.println("\n.......................................");
+			System.out.println(libro.toString());
+			System.out.println(".......................................");
+		}
+		String a;
+		do {
+			System.out.println("\n¿Volver?(si/no)");
+			System.out.print("=> ");
+			a = scan.nextLine();
+			if (a.equals("si")) {
+				gestionarLibros();
+			} 
+		} while (a != "si" || a != "no");
 		scan.close();
 	}
 	

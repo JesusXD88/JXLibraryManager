@@ -17,6 +17,7 @@
 package org.JXLibraryManager.App;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Clase que se encarga de interactuar con la base de datos, gestionando la biblioteca de libros.
@@ -131,6 +132,32 @@ public class GestionBiblioteca {
 		}
 		System.out.println("El libro se ha eliminado con exito!");
 		return true;
+	}
+	
+	//Devolver todo el inventario de libros
+	
+	/**
+	 * Método que devuelve todo el inventario de libros
+	 * @return ArrayList de Libros
+	 */
+	public ArrayList<Libro> getInventarioLibros() {
+		String query = "SELECT * FROM Libros";
+		ResultSet result;
+		boolean checker = false;
+		ArrayList<Libro> lista = new ArrayList<Libro>();
+		try {
+			result = stmt.executeQuery(query);
+			while (result.next()) {
+				lista.add(new Libro(result.getString("ISBN"), result.getString("Nombre"), result.getString("Autor"), result.getString("Genero"), result.getString("Tematica")));
+				checker = true;
+			}
+			if (checker == false) return null;
+		} catch (Exception e) {
+			System.out.println("No se ha encontrado el libro!");
+			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			return null;
+		}
+		return lista;
 	}
 	
 	/**
