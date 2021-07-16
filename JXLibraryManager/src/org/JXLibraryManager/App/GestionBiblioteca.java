@@ -18,7 +18,11 @@ package org.JXLibraryManager.App;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.util.TreeMap;
+
+import de.vandermeer.asciitable.AsciiTable;
+import de.vandermeer.asciithemes.a8.A8_Grids;
 
 /**
  * Clase que se encarga de interactuar con la base de datos, gestionando la biblioteca de libros.
@@ -161,6 +165,27 @@ public class GestionBiblioteca {
 		return lista;
 	}
 	
+	/**
+	 * Método que devuelve un String con una tabla del inventario de libros.
+	 * @return Tabla con el inventario.
+	 */
+	public String mostrarInventario() {
+		ArrayList<Libro> inventario = this.getInventarioLibros();
+		if (inventario == null) return null;
+		AsciiTable at = new AsciiTable();
+		at.getContext().setWidth(132);
+		at.getContext().setGrid(A8_Grids.lineDobuleTripple());
+		at.addRule();
+		at.addRow("ISBN","Nombre","Autor","Género","Temática");
+		for (Libro libro : inventario) {
+			at.addRule();
+			at.addRow(libro.getISBN(),libro.getNombre(),libro.getAutor(),libro.getGenero(),libro.getTematica());
+		}
+		at.addRule();
+		
+		return at.render();
+	}
+	
 	//Devolver toda la biblioteca
 	
 	/**
@@ -177,7 +202,11 @@ public class GestionBiblioteca {
 			while (result.next()) {
 				ArrayList<String> lista = new ArrayList<String>();
 				lista.add(result.getString("FechaAnadido"));
-				lista.add(result.getString("FechaDevolucion"));
+				if (result.getString("FechaDevolucion") != null) {
+					lista.add(result.getString("FechaDevolucion"));
+				} else {
+					lista.add("---");
+				}
 				biblioteca.put(new Libro(result.getString("ISBN"), result.getString("Nombre"), result.getString("Autor"), result.getString("Genero"), result.getString("Tematica")), lista);
 				checker = true;
 			}
@@ -189,6 +218,27 @@ public class GestionBiblioteca {
 		}
 		return biblioteca;
 	} 
+	
+	/**
+	 * Método que devuelve un String con una tabla del contenido de la biblioteca.
+	 * @return String con la biblioteca.
+	 */
+	private String mostrarBiblioteca() {
+		TreeMap<Libro, ArrayList<String>> biblioteca = this.getBiblioteca();
+		if (biblioteca == null) return null;
+		AsciiTable at = new AsciiTable();
+		at.getContext().setWidth(132);
+		at.getContext().setGrid(A8_Grids.lineDobuleTripple());
+		at.addRule();
+		at.addRow("ISBN","Nombre","Autor","Género","Temática","Anadido","Devuelto");
+		for (Entry<Libro, ArrayList<String>> entrada : biblioteca.entrySet()) {
+			at.addRule();
+			at.addRow(entrada.getKey().getISBN(),entrada.getKey().getNombre(),entrada.getKey().getAutor(),entrada.getKey().getGenero(),entrada.getKey().getTematica(),entrada.getValue().get(0),entrada.getValue().get(1));
+		}
+		at.addRule();
+		
+		return at.render();
+	}
 	
 	/**
 	 * Método que busca un libro por ISBN y lo devuelve
@@ -218,6 +268,15 @@ public class GestionBiblioteca {
 			return null;
 		}
 		return new Libro(ISBN, nombre, autor, genero, tematica);
+	}
+	
+	/**
+	 * Método toString.
+	 * Devuelve la tabla que genera el método mostrarBiblioteca.
+	 */
+	@Override
+	public String toString() {
+		return this.mostrarBiblioteca();
 	}
 	
 }

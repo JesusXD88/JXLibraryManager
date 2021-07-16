@@ -16,7 +16,6 @@
 
 package org.JXLibraryManager.App;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -47,7 +46,7 @@ public class Main {
 			System.out.println("2. Mostrar los libros actualmente en la biblioteca.");
 			System.out.println("3. Mostrar los libros extraidos de la biblioteca.");
 			System.out.println("4. Extraer un libro de la biblioteca.");
-			System.out.println("5. Devolver un libro extraido a la biblioteca.");
+			System.out.println("5. Devolver un libro extraido a la biblioteca.\n");
 			System.out.println("6. Salir.");
 			
 			System.out.println("\n(Para seleccionar una opción introduce un número, por ejemplo: 1)\n\n");
@@ -66,6 +65,9 @@ public class Main {
 		switch (opcion) {
 		case 1:
 			gestionarLibros();
+			break;
+		case 2:
+			showBiblioteca();
 			break;
 		case 6:
 			System.out.println("Saliendo..... ¡Hasta luegooo!");
@@ -382,19 +384,44 @@ public class Main {
 		scan.close();
 	}
 	
+	/**
+	 * Método que muestra por consola el inventario de libros
+	 */
 	public static void inventarioLibros() {
 		Scanner scan = new Scanner(System.in);
-		ArrayList<Libro> lista = lib.getInventarioLibros();
-		if (lista == null) {
+		String tabla = lib.mostrarInventario();
+		if (tabla == null) {
 			System.out.println("\nNo existe ningún libro en el inventario todavía.\nPor favor, inserta primeramente un libro\n");
 			gestionarLibros();
 		}
 		System.out.println("\nEl inventario de libros se muestra a continuación:\n");
-		for (Libro libro : lista) {
-			System.out.println("\n.......................................");
-			System.out.println(libro.toString());
-			System.out.println(".......................................");
+		System.out.println(tabla);
+		String a;
+		do {
+			System.out.println("\n¿Volver?(si/no)");
+			System.out.print("=> ");
+			a = scan.nextLine();
+			if (a.equals("si")) {
+				gestionarLibros();
+			} 
+		} while (a != "si" || a != "no");
+		scan.close();
+	}
+	
+	//Mostrar biblioteca
+	
+	/**
+	 * Método que muestra por consola la biblioteca de libros
+	 */
+	public static void showBiblioteca() {
+		Scanner scan = new Scanner(System.in);
+		String biblioteca = lib.toString();
+		if (biblioteca == null) {
+			System.out.println("\nNo existe ningún libro en la biblioteca todavía.\nPor favor, inserta primeramente un libro\n");
+			gestionarLibros();
 		}
+		System.out.println("\nMostrando los libros actualmente en la biblioteca:\n");
+		System.out.println(biblioteca);
 		String a;
 		do {
 			System.out.println("\n¿Volver?(si/no)");
@@ -417,7 +444,8 @@ public class Main {
 	        return false;
 	    }
 	    try {
-	        double d = Double.parseDouble(strNum);
+	        @SuppressWarnings("unused")
+			double d = Double.parseDouble(strNum);
 	    } catch (NumberFormatException nfe) {
 	        return false;
 	    }

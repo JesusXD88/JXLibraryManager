@@ -21,7 +21,7 @@ package org.JXLibraryManager.App;
  * @author jesusxd88
  *
  */
-public class Libro {
+public class Libro implements Comparable<Libro> {
 
 	private String ISBN;
 	private String nombre;
@@ -118,5 +118,13 @@ public class Libro {
 				+ "Autor:\t\t" + this.autor + "\n"
 				+ "Genero:\t\t" + this.genero + "\n"
 				+ "Tematica:\t" + this.tematica;
+	}
+	
+	/**
+	 * Método compareTo
+	 */
+	@Override
+	public int compareTo(Libro libro) {
+		return this.ISBN.compareTo(libro.ISBN);
 	}
 }
