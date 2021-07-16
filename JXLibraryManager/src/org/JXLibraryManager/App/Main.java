@@ -428,7 +428,7 @@ public class Main {
 			System.out.print("=> ");
 			a = scan.nextLine();
 			if (a.equals("si")) {
-				gestionarLibros();
+				main(null);
 			} 
 		} while (a != "si" || a != "no");
 		scan.close();

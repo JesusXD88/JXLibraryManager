@@ -6,14 +6,14 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/driver/sqlite-jdbc-3.36.0.1.jar"/>
-	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/driver/asciitable-0.3.2.jar"/>
-	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/driver/skb-interfaces-0.0.2.jar"/>
-	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/driver/char-translation-0.0.2.jar"/>
-	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/driver/ascii-utf-themes-0.0.1.jar"/>
-	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/driver/commons-lang3-3.12.0.jar"/>
-	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/driver/ST4-4.3.1.jar"/>
-	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/driver/antlr-runtime-3.5.2.jar"/>
-	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/driver/stringtemplate-4.0.2.jar"/>
+	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/libs/sqlite-jdbc-3.36.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/libs/asciitable-0.3.2.jar"/>
+	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/libs/ascii-utf-themes-0.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/libs/skb-interfaces-0.0.2.jar"/>
+	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/libs/char-translation-0.0.2.jar"/>
+	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/libs/commons-lang3-3.12.0.jar"/>
+	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/libs/ST4-4.3.1.jar"/>
+	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/libs/antlr-runtime-3.5.2.jar"/>
+	<classpathentry kind="lib" path="/home/jesusxd88/git/JXLibraryManager/JXLibraryManager/libs/stringtemplate-4.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
