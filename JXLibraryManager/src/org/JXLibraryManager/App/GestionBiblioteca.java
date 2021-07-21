@@ -217,6 +217,30 @@ public class GestionBiblioteca {
 			return null;
 		}
 		return biblioteca;
+	}
+	
+	/**
+	 * Método que devuelve la tabla LibrosExtraidos en un Mapa
+	 * @return TreeMap de Libro - String (FechaExtraccion)
+	 */
+	public TreeMap<Libro, String> getLibrosExtraidos() {
+		String query = "SELECT LibrosExtraidos.ISBN, Libros.Nombre, Libros.Autor, Libros.Genero, Libros.Tematica, LibrosExtraidos.FechaExtraccion FROM LibrosExtraidos INNER JOIN Libros ON LibrosExtraidos.ISBN = Libros.ISBN;";
+		ResultSet result;
+		boolean checker = false;
+		TreeMap<Libro, String> biblioteca = new TreeMap<Libro, String>();
+		try {
+			result = stmt.executeQuery(query);
+			while (result.next()) {
+				biblioteca.put(new Libro(result.getString("ISBN"), result.getString("Nombre"), result.getString("Autor"), result.getString("Genero"), result.getString("Tematica")), result.getString("FechaExtraccion"));
+				checker = true;
+			}
+			if (checker == false) return null;
+		} catch (Exception e) {
+			System.out.println("No se ha encontrado el libro!");
+			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			return null;
+		}
+		return biblioteca;
 	} 
 	
 	/**
@@ -234,6 +258,23 @@ public class GestionBiblioteca {
 		for (Entry<Libro, ArrayList<String>> entrada : biblioteca.entrySet()) {
 			at.addRule();
 			at.addRow(entrada.getKey().getISBN(),entrada.getKey().getNombre(),entrada.getKey().getAutor(),entrada.getKey().getGenero(),entrada.getKey().getTematica(),entrada.getValue().get(0),entrada.getValue().get(1));
+		}
+		at.addRule();
+		
+		return at.render();
+	}
+	
+	public String mostrarLibrosExtraidos() {
+		TreeMap<Libro, String> ext = this.getLibrosExtraidos();
+		if (ext == null) return null;
+		AsciiTable at = new AsciiTable();
+		at.getContext().setWidth(132);
+		at.getContext().setGrid(A8_Grids.lineDobuleTripple());
+		at.addRule();
+		at.addRow("ISBN","Nombre","Autor","Género","Temática","Extraido");
+		for (Entry<Libro, String> entrada : ext.entrySet()) {
+			at.addRule();
+			at.addRow(entrada.getKey().getISBN(),entrada.getKey().getNombre(),entrada.getKey().getAutor(),entrada.getKey().getGenero(),entrada.getKey().getTematica(),entrada.getValue());
 		}
 		at.addRule();
 		

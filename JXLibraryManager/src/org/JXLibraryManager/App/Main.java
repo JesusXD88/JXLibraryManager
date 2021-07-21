@@ -69,6 +69,9 @@ public class Main {
 		case 2:
 			showBiblioteca();
 			break;
+		case 3:
+			showLibrosExtraidos();
+			break;
 		case 6:
 			System.out.println("Saliendo..... ¡Hasta luegooo!");
 			System.exit(0);
@@ -418,10 +421,36 @@ public class Main {
 		String biblioteca = lib.toString();
 		if (biblioteca == null) {
 			System.out.println("\nNo existe ningún libro en la biblioteca todavía.\nPor favor, inserta primeramente un libro\n");
-			gestionarLibros();
+			main(null);
 		}
 		System.out.println("\nMostrando los libros actualmente en la biblioteca:\n");
 		System.out.println(biblioteca);
+		String a;
+		do {
+			System.out.println("\n¿Volver?(si/no)");
+			System.out.print("=> ");
+			a = scan.nextLine();
+			if (a.equals("si")) {
+				main(null);
+			} 
+		} while (a != "si" || a != "no");
+		scan.close();
+	}
+	
+	//Mostrar libros extraidos
+	
+	/**
+	 * Método que muestra los libros extraidos de la biblioteca
+	 */
+	public static void showLibrosExtraidos() {
+		Scanner scan = new Scanner(System.in);
+		String extracted = lib.mostrarLibrosExtraidos();
+		if (extracted == null) {
+			System.out.println("\nNo existe ningún libro extraido todavía.\nPor favor, extrae primeramente un libro\n");
+			main(null);
+		}
+		System.out.println("\nMostrando los libros extraidos de la biblioteca:\n");
+		System.out.println(extracted);
 		String a;
 		do {
 			System.out.println("\n¿Volver?(si/no)");
