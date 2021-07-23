@@ -395,6 +395,13 @@ public class Main {
 		String tabla = lib.mostrarInventario();
 		if (tabla == null) {
 			System.out.println("\nNo existe ningún libro en el inventario todavía.\nPor favor, inserta primeramente un libro\n");
+			System.out.println("\n---------------------------------------\n\n");
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			gestionarLibros();
 		}
 		System.out.println("\nEl inventario de libros se muestra a continuación:\n");
@@ -421,6 +428,13 @@ public class Main {
 		String biblioteca = lib.toString();
 		if (biblioteca == null) {
 			System.out.println("\nNo existe ningún libro en la biblioteca todavía.\nPor favor, inserta primeramente un libro\n");
+			System.out.println("\n---------------------------------------\n\n");
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			main(null);
 		}
 		System.out.println("\nMostrando los libros actualmente en la biblioteca:\n");
@@ -447,6 +461,13 @@ public class Main {
 		String extracted = lib.mostrarLibrosExtraidos();
 		if (extracted == null) {
 			System.out.println("\nNo existe ningún libro extraido todavía.\nPor favor, extrae primeramente un libro\n");
+			System.out.println("\n---------------------------------------\n\n");
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			main(null);
 		}
 		System.out.println("\nMostrando los libros extraidos de la biblioteca:\n");

@@ -264,6 +264,10 @@ public class GestionBiblioteca {
 		return at.render();
 	}
 	
+	/**
+	 * Método que genera una tabla con los libros extraidos de la biblioteca
+	 * @return Tabla con libros extraidos de la biblioteca
+	 */
 	public String mostrarLibrosExtraidos() {
 		TreeMap<Libro, String> ext = this.getLibrosExtraidos();
 		if (ext == null) return null;
