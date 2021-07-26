@@ -305,6 +305,25 @@ public class GestionBiblioteca {
 	}
 	
 	/**
+	 * Método que permite devolver un libro a la biblioteca
+	 * @param libro Libro
+	 * @return boolean
+	 */
+	public boolean devolverLibro(Libro libro) {
+		String query = "INSERT INTO Biblioteca VALUES ((SELECT ISBN FROM Libros WHERE ISBN = " + libro.getISBN() + "), (SELECT FechaInsercion FROM LibrosExtraidos WHERE ISBN = " + libro.getISBN() + "), DATETIME('now'));";
+		String query2 = "DELETE FROM LibrosExtraidos WHERE ISBN = (SELECT ISBN FROM Libros WHERE ISBN = " + libro.getISBN() + ");";
+		try {
+			stmt.executeUpdate(query);
+			stmt.executeUpdate(query2);
+		} catch (Exception e) {
+			System.out.println("No se ha podido devolver el libro!");
+			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			return false;
+		}
+		return true;
+	}
+	
+	/**
 	 * Método que busca un libro por ISBN y lo devuelve
 	 * @param ISBN El ISBN del Libro
 	 * @return Libro

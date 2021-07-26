@@ -46,8 +46,9 @@ public class Main {
 			System.out.println("2. Mostrar los libros actualmente en la biblioteca.");
 			System.out.println("3. Mostrar los libros extraidos de la biblioteca.");
 			System.out.println("4. Extraer un libro de la biblioteca.");
-			System.out.println("5. Devolver un libro extraido a la biblioteca.\n");
-			System.out.println("6. Salir.");
+			System.out.println("5. Devolver un libro extraido a la biblioteca.");
+			System.out.println("6. Opciones Avanzadas.\n");
+			System.out.println("7. Salir.");
 			
 			System.out.println("\n(Para seleccionar una opción introduce un número, por ejemplo: 1)\n\n");
 			System.out.print("=> ");
@@ -57,7 +58,7 @@ public class Main {
 				System.out.println("\nIntroduce un número válido\n");
 				opcion = 0;
 			}
-		} while (opcion < 1 || opcion > 6);
+		} while (opcion < 1 || opcion > 7);
 		
 		System.out.println();
 		System.out.println();
@@ -75,7 +76,10 @@ public class Main {
 		case 4:
 			extractLibro();
 			break;
-		case 6:
+		case 5:
+			returnLibro();
+			break;
+		case 7:
 			System.out.println("Saliendo..... ¡Hasta luegooo!");
 			System.exit(0);
 		}
@@ -487,6 +491,9 @@ public class Main {
 		scan.close();
 	}
 	
+	/**
+	 * Método que permite realizar la operación de extraerLibro
+	 */
 	public static void extractLibro() {
 		Scanner scan = new Scanner(System.in);
 		String ISBN;
@@ -498,12 +505,44 @@ public class Main {
 		ISBN = scan.nextLine();
 		while (ISBN.length() != 13 || !isNumeric(ISBN)) {
 			System.out.println("Introduce un ISBN válido");
-			System.out.print("ISBN: ");
+			System.out.print("=> ");
 			ISBN = scan.nextLine();
 		}
 		Libro libro = library.retrieveLibroPorISBN(ISBN);
 		boolean ok = library.extraerLibro(libro);
 		if (ok == true) System.out.println("\nSe ha extraido el libro con éxito!\n");
+		String a;
+		do {
+			System.out.println("\n¿Volver?(si/no)");
+			System.out.print("=> ");
+			a = scan.nextLine();
+			if (a.equals("si")) {
+				main(null);
+			} 
+		} while (a != "si" || a != "no");
+		scan.close();
+	}
+	
+	/**
+	 * Método que permite realizar la operación de devolverLibro
+	 */
+	public static void returnLibro() {
+		Scanner scan = new Scanner(System.in);
+		String ISBN;
+		System.out.println();
+		System.out.println();
+		System.out.println("---------------------------------------");
+		System.out.println("\n\nPor favor, introduce a continuación el ISBN del libro a devolver a la bibilioteca:\n");
+		System.out.print("=> ");
+		ISBN = scan.nextLine();
+		while (ISBN.length() != 13 || !isNumeric(ISBN)) {
+			System.out.println("Introduce un ISBN válido");
+			System.out.print("=> ");
+			ISBN = scan.nextLine();
+		}
+		Libro libro = library.retrieveLibroPorISBN(ISBN);
+		boolean ok = library.devolverLibro(libro);
+		if (ok == true) System.out.println("\nSe ha devuelto el libro con éxito!\n");
 		String a;
 		do {
 			System.out.println("\n¿Volver?(si/no)");
