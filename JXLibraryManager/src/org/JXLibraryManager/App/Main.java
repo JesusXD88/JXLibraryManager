@@ -25,7 +25,7 @@ import java.util.Scanner;
  */
 public class Main {
 
-	private static GestionBiblioteca lib = new GestionBiblioteca(); //Biblioteca
+	private static GestionBiblioteca library = new GestionBiblioteca(); //Biblioteca
 	
 	/**
 	 * Main
@@ -33,7 +33,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		
-		lib.conexionDB();
+		library.conexionDB();
 		int opcion;
 		Scanner scan = new Scanner(System.in);
 		do {
@@ -71,6 +71,9 @@ public class Main {
 			break;
 		case 3:
 			showLibrosExtraidos();
+			break;
+		case 4:
+			extractLibro();
 			break;
 		case 6:
 			System.out.println("Saliendo..... ¡Hasta luegooo!");
@@ -163,7 +166,7 @@ public class Main {
 			System.out.print("=> ");
 			ver = scan.nextLine();
 			if (ver.equals("si")) {
-				lib.insertarLibro(libro);
+				library.insertarLibro(libro);
 				gestionarLibros();
 			} else if (ver.equals("no")) {
 				anadirLibro();
@@ -194,7 +197,7 @@ public class Main {
 				ISBN = scan.nextLine();
 			}
 			
-			libro = lib.retrieveLibroPorISBN(ISBN);
+			libro = library.retrieveLibroPorISBN(ISBN);
 			if (libro != null) {
 				System.out.println("\nEl libro correspondiente al ISBN introducido es:\n");
 				System.out.println(libro.toString());
@@ -326,7 +329,7 @@ public class Main {
 			System.out.print("=> ");
 			cambios = scan.nextLine();
 			if (cambios.equals("si")) {
-				lib.modificarLibro(libro, ISBN);
+				library.modificarLibro(libro, ISBN);
 				gestionarLibros();
 			} else if (cambios.equals("no")) {
 				System.out.println("\nNo se ha modificado el libro.\n");
@@ -354,7 +357,7 @@ public class Main {
 			ISBN = scan.nextLine();
 		}
 		
-		Libro libro = lib.retrieveLibroPorISBN(ISBN);
+		Libro libro = library.retrieveLibroPorISBN(ISBN);
 		if (libro != null) {
 			System.out.println("\nEl libro correspondiente al ISBN introducido es:\n");
 			System.out.println(libro.toString());
@@ -378,7 +381,7 @@ public class Main {
 			System.out.print("=> ");
 			a = scan.nextLine();
 			if (a.equals("si")) {
-				lib.eliminarLibro(libro);
+				library.eliminarLibro(libro);
 				gestionarLibros();
 			} else if (a.equals("no")) {
 				gestionarLibros();
@@ -392,7 +395,7 @@ public class Main {
 	 */
 	public static void inventarioLibros() {
 		Scanner scan = new Scanner(System.in);
-		String tabla = lib.mostrarInventario();
+		String tabla = library.mostrarInventario();
 		if (tabla == null) {
 			System.out.println("\nNo existe ningún libro en el inventario todavía.\nPor favor, inserta primeramente un libro\n");
 			System.out.println("\n---------------------------------------\n\n");
@@ -425,7 +428,7 @@ public class Main {
 	 */
 	public static void showBiblioteca() {
 		Scanner scan = new Scanner(System.in);
-		String biblioteca = lib.toString();
+		String biblioteca = library.toString();
 		if (biblioteca == null) {
 			System.out.println("\nNo existe ningún libro en la biblioteca todavía.\nPor favor, inserta primeramente un libro\n");
 			System.out.println("\n---------------------------------------\n\n");
@@ -458,7 +461,7 @@ public class Main {
 	 */
 	public static void showLibrosExtraidos() {
 		Scanner scan = new Scanner(System.in);
-		String extracted = lib.mostrarLibrosExtraidos();
+		String extracted = library.mostrarLibrosExtraidos();
 		if (extracted == null) {
 			System.out.println("\nNo existe ningún libro extraido todavía.\nPor favor, extrae primeramente un libro\n");
 			System.out.println("\n---------------------------------------\n\n");
@@ -472,6 +475,35 @@ public class Main {
 		}
 		System.out.println("\nMostrando los libros extraidos de la biblioteca:\n");
 		System.out.println(extracted);
+		String a;
+		do {
+			System.out.println("\n¿Volver?(si/no)");
+			System.out.print("=> ");
+			a = scan.nextLine();
+			if (a.equals("si")) {
+				main(null);
+			} 
+		} while (a != "si" || a != "no");
+		scan.close();
+	}
+	
+	public static void extractLibro() {
+		Scanner scan = new Scanner(System.in);
+		String ISBN;
+		System.out.println();
+		System.out.println();
+		System.out.println("---------------------------------------");
+		System.out.println("\n\nPor favor, introduce a continuación el ISBN del libro a extraer de la bibilioteca:\n");
+		System.out.print("=> ");
+		ISBN = scan.nextLine();
+		while (ISBN.length() != 13 || !isNumeric(ISBN)) {
+			System.out.println("Introduce un ISBN válido");
+			System.out.print("ISBN: ");
+			ISBN = scan.nextLine();
+		}
+		Libro libro = library.retrieveLibroPorISBN(ISBN);
+		boolean ok = library.extraerLibro(libro);
+		if (ok == true) System.out.println("\nSe ha extraido el libro con éxito!\n");
 		String a;
 		do {
 			System.out.println("\n¿Volver?(si/no)");
