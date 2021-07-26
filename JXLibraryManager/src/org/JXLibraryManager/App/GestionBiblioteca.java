@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import de.vandermeer.asciitable.AT_Cell;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciithemes.a8.A8_Grids;
 
@@ -174,12 +175,13 @@ public class GestionBiblioteca {
 		if (inventario == null) return null;
 		AsciiTable at = new AsciiTable();
 		at.getContext().setWidth(132);
-		at.getContext().setGrid(A8_Grids.lineDobuleTripple());
+		//at.getContext().setGrid(A8_Grids.lineDobuleTripple());
 		at.addRule();
 		at.addRow("ISBN","Nombre","Autor","Género","Temática");
 		for (Libro libro : inventario) {
 			at.addRule();
-			at.addRow(libro.getISBN(),libro.getNombre(),libro.getAutor(),libro.getGenero(),libro.getTematica());
+			AT_Cell cell = at.addRow(libro.getISBN(),libro.getNombre(),libro.getAutor(),libro.getGenero(),libro.getTematica()).getCells().get(1);
+			cell.getContext().setPaddingRight(3);
 		}
 		at.addRule();
 		
@@ -257,7 +259,8 @@ public class GestionBiblioteca {
 		at.addRow("ISBN","Nombre","Autor","Género","Temática","Anadido","Devuelto");
 		for (Entry<Libro, ArrayList<String>> entrada : biblioteca.entrySet()) {
 			at.addRule();
-			at.addRow(entrada.getKey().getISBN(),entrada.getKey().getNombre(),entrada.getKey().getAutor(),entrada.getKey().getGenero(),entrada.getKey().getTematica(),entrada.getValue().get(0),entrada.getValue().get(1));
+			AT_Cell cell= at.addRow(entrada.getKey().getISBN(),entrada.getKey().getNombre(),entrada.getKey().getAutor(),entrada.getKey().getGenero(),entrada.getKey().getTematica(),entrada.getValue().get(0),entrada.getValue().get(1)).getCells().get(1);
+			cell.getContext().setPaddingRight(3);
 		}
 		at.addRule();
 		
@@ -278,7 +281,8 @@ public class GestionBiblioteca {
 		at.addRow("ISBN","Nombre","Autor","Género","Temática","Extraido");
 		for (Entry<Libro, String> entrada : ext.entrySet()) {
 			at.addRule();
-			at.addRow(entrada.getKey().getISBN(),entrada.getKey().getNombre(),entrada.getKey().getAutor(),entrada.getKey().getGenero(),entrada.getKey().getTematica(),entrada.getValue());
+			AT_Cell cell= at.addRow(entrada.getKey().getISBN(),entrada.getKey().getNombre(),entrada.getKey().getAutor(),entrada.getKey().getGenero(),entrada.getKey().getTematica(),entrada.getValue()).getCells().get(1);
+			cell.getContext().setPaddingRight(3);
 		}
 		at.addRule();
 		
@@ -371,6 +375,124 @@ public class GestionBiblioteca {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Método que realiza una operación de INSERT, UPDATE o DELETE según la cadena SQL que se le pase por parámetro
+	 * @param query SQL query (INSERT, UPDATE o DELETE)
+	 * @return boolean
+	 */
+	public boolean executeUpdatSQL(String query) {
+		try {
+			stmt.executeUpdate(query);
+		} catch (Exception e) {
+			System.out.println("No se ha podido realizar la operación!");
+			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Método que realiza una consulta SQL y devuelve un mapa de Libro - mapa de fechas en caso de devolver contenido
+	 * @param query Query SQL
+	 * @return Mapa de Libro - mapa de fechas
+	 */
+	public TreeMap<Libro,TreeMap<String,String>> executeQuerySQL(String query) {
+		ResultSet result;
+		Libro libro;
+		TreeMap<Libro,TreeMap<String,String>> mapa = new TreeMap<Libro,TreeMap<String,String>>();
+		try {
+			result = stmt.executeQuery(query);
+			boolean empty = true;
+			TreeMap<String,String> arr;
+			while (result.next()) {
+				ResultSetMetaData rsMetaData = result.getMetaData();
+				libro = new Libro (result.getString("ISBN"), result.getString("Nombre"), result.getString("Autor"), result.getString("Genero"), result.getString("Tematica"));
+				arr = new TreeMap<String,String>();
+				for (int i = 1; i < rsMetaData.getColumnCount() + 1; i++) {
+					if(rsMetaData.getColumnName(i).equals("FechaAnadido")) arr.put("FechaAnadido", result.getString("FechaAnadido"));
+					if(rsMetaData.getColumnName(i).equals("FechaDevolucion")) arr.put("FechaDevolucion", result.getString("FechaDevolucion"));
+					if(rsMetaData.getColumnName(i).equals("FechaInsercion")) arr.put("FechaInsercion", result.getString("FechaInsercion"));
+					if(rsMetaData.getColumnName(i).equals("FechaExtraccion")) arr.put("FechaExtraccion", result.getString("FechaExtraccion"));
+				}
+				mapa.put(libro, arr);
+			}
+		} catch (Exception e) {
+			System.out.println("No se ha podido realizar la consulta!");
+			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			return null;
+		}
+		return mapa;
+	}
+	
+	/**
+	 * Método que muestra la salida de una consulta SQL
+	 * @param query Query SQL
+	 * @return Tabla con la salida de la consulta
+	 */
+	public String mostrarQuerySQL(String query) {
+		TreeMap<Libro, TreeMap<String,String>> resultSQL = this.executeQuerySQL(query);
+		if (resultSQL == null) return null;
+		AsciiTable at = new AsciiTable();
+		at.getContext().setWidth(132);
+		at.getContext().setGrid(A8_Grids.lineDobuleTripple());
+		at.addRule();
+		at.addRow("ISBN","Nombre","Autor","Género","Temática","Anadido","Devuelto","Extraido");
+		try {
+			for (Entry<Libro, TreeMap<String, String>> entrada : resultSQL.entrySet()) {
+				String n = "---";
+				at.addRule();
+				if (!entrada.getValue().isEmpty() && entrada.getKey() != null) {
+					ArrayList<String> arr = new ArrayList<String>();
+					for (Entry<String, String> ent: entrada.getValue().entrySet()) {
+						if (ent.getKey().equals("FechaAnadido")) {
+							arr.add(ent.getValue());
+						} else {
+							arr.add(n);
+						}
+						if (ent.getKey().equals("FechaDevolucion")) {
+							arr.add(ent.getValue());
+						} else {
+							arr.add(n);
+						}
+						if (ent.getKey().equals("FechaExtraccion")) {
+							arr.add(ent.getValue());
+						} else {
+							arr.add(n);
+						}
+					}
+					at.addRow(entrada.getKey().getISBN(),entrada.getKey().getNombre(),entrada.getKey().getAutor(),entrada.getKey().getGenero(),entrada.getKey().getTematica(), arr.get(0), arr.get(1), arr.get(2), arr.get(3));
+				} else if (entrada.getValue().isEmpty()) {
+					at.addRow(entrada.getKey().getISBN(),entrada.getKey().getNombre(),entrada.getKey().getAutor(),entrada.getKey().getGenero(),entrada.getKey().getTematica(), n, n, n);
+				} else if (entrada.getKey() == null ) {
+					ArrayList<String> arr = new ArrayList<String>();
+					for (Entry<String, String> ent: entrada.getValue().entrySet()) {
+						if (ent.getKey().equals("FechaAnadido")) {
+							arr.add(ent.getValue());
+						} else {
+							arr.add(n);
+						}
+						if (ent.getKey().equals("FechaDevolucion")) {
+							arr.add(ent.getValue());
+						} else {
+							arr.add(n);
+						}
+						if (ent.getKey().equals("FechaExtraccion")) {
+							arr.add(ent.getValue());
+						} else {
+							arr.add(n);
+						}
+					}
+					at.addRow(arr);
+				}
+			}
+		} catch (Exception e) {
+			return null;
+		}
+		at.addRule();
+		
+		return at.render();
 	}
 	
 	/**

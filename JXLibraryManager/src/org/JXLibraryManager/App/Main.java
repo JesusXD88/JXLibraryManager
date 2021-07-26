@@ -586,11 +586,14 @@ public class Main {
 				System.out.println("\nIntroduce un número válido\n");
 				opcion = 0;
 			}
-		} while (opcion < 1 || opcion > 7);
+		} while (opcion < 1 || opcion > 3);
 		
 		switch (opcion) {
 		case 1:
 			eliminarDB();
+			break;
+		case 2:
+			menuSQL();
 			break;
 		case 3:
 			main(null);
@@ -624,6 +627,90 @@ public class Main {
 				opcionesAvanzadas();
 			}
 		} while (a != "si" || a != "no");
+		scan.close();
+	}
+	
+	/**
+	 * Menú de las consultas SQL
+	 */
+	public static void menuSQL() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("\n\nPor favor, selecciona el tipo de statement SQL a ejecutar:\n");
+		System.out.println("1. INSERT, UPDATE, DELETE.");
+		System.out.println("2. Query SQL.\n");
+		System.out.println("3. Volver.");
+		
+		int opcion;
+		do {
+			try {
+				System.out.print("=> ");
+				opcion = Integer.parseInt(scan.nextLine());
+			} catch (Exception e) {
+				System.out.println("\nIntroduce un número válido\n");
+				opcion = 0;
+			}
+		} while (opcion < 1 || opcion > 3);
+		
+		switch (opcion) {
+		case 1:
+			executeUpdateSQL();
+			break;
+		case 2:
+			querySQL();
+			break;
+		case 3:
+			main(null);
+			break;
+		}
+		scan.close();
+	}
+	
+	/**
+	 * Método que se encarga de obtener una cadena SQL por consola de INSERT, UPDATE o DELETE
+	 */
+	public static void executeUpdateSQL() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("\n\nPor favor, introduce a continuación la cadena SQL a ejecutar (INSERT, UPDATE, DELETE):");
+		System.out.print("\n=> ");
+		String query = scan.nextLine();
+		boolean ok = library.executeUpdatSQL(query);
+		if (ok) System.out.println("La operación se realizó con éxito!");
+		String a;
+		do {
+			System.out.println("\n¿Volver?(si/no)");
+			System.out.print("=> ");
+			a = scan.nextLine();
+			if (a.equals("si")) {
+				menuSQL();
+			} 
+		} while (a != "si" || a != "no");
+		scan.close();
+	}
+	
+	/**
+	 * Método que se encarga de obtener por consola una query SQL
+	 */
+	public static void querySQL() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("\n\nPor favor, introduce a continuación la query SQL a ejecutar:");
+		System.out.print("\n=> ");
+		String query = scan.nextLine();
+		String resultado = library.mostrarQuerySQL(query);
+		if (resultado != null) {
+			System.out.println("El resultado de la query SQL se muestra a continuación:\n\n");
+			System.out.println(resultado);
+			String a;
+			do {
+				System.out.println("\n¿Volver?(si/no)");
+				System.out.print("=> ");
+				a = scan.nextLine();
+				if (a.equals("si")) {
+					menuSQL();
+				} 
+			} while (a != "si" || a != "no");
+		} else {
+			menuSQL();
+		}
 		scan.close();
 	}
 	
