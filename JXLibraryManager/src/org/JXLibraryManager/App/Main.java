@@ -79,6 +79,9 @@ public class Main {
 		case 5:
 			returnLibro();
 			break;
+		case 6:
+			opcionesAvanzadas();
+			break;
 		case 7:
 			System.out.println("Saliendo..... ¡Hasta luegooo!");
 			System.exit(0);
@@ -491,6 +494,8 @@ public class Main {
 		scan.close();
 	}
 	
+	//Extraer Libros
+	
 	/**
 	 * Método que permite realizar la operación de extraerLibro
 	 */
@@ -523,6 +528,8 @@ public class Main {
 		scan.close();
 	}
 	
+	//Devolver Libros
+	
 	/**
 	 * Método que permite realizar la operación de devolverLibro
 	 */
@@ -551,6 +558,71 @@ public class Main {
 			if (a.equals("si")) {
 				main(null);
 			} 
+		} while (a != "si" || a != "no");
+		scan.close();
+	}
+	
+	//Opciones Avanzadas
+	
+	/**
+	 * Menú de Opciones Avanzadas
+	 */
+	public static void opcionesAvanzadas() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println();
+		System.out.println();
+		System.out.println("---------------------------------------");
+		System.out.println("\n\nHas entrado en el modo de configuración avanzada.\nPor favor, ten cuidado con lo que haces.\nSelecciona una opción:");
+		System.out.println("\n\n1. Eliminar TODA la base de datos de la biblioteca. (¡CUIDADO!)");
+		System.out.println("2. Ejecutar una query SQL.\n");
+		System.out.println("3. Volver.");
+		
+		int opcion;
+		do {
+			try {
+				System.out.print("=> ");
+				opcion = Integer.parseInt(scan.nextLine());
+			} catch (Exception e) {
+				System.out.println("\nIntroduce un número válido\n");
+				opcion = 0;
+			}
+		} while (opcion < 1 || opcion > 7);
+		
+		switch (opcion) {
+		case 1:
+			eliminarDB();
+			break;
+		case 3:
+			main(null);
+			break;
+		}
+		scan.close();
+	}
+	
+	/**
+	 * Método que permite borrar todos los datos de la DB
+	 */
+	public static void eliminarDB() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("\n\nVas a eliminar TODOS LOS DATOS de la Base de Datos. Esta acción es irreversible.");
+		String a;
+		do {
+			System.out.println("\n\n¿Seguro que quieres proceder?(si/no)");
+			System.out.print("=> ");
+			a = scan.nextLine();
+			if (a.equals("si")) {
+				boolean ok = library.truncateDB();
+				if (ok) System.out.println("Se han eliminado correctamente TODOS LOS DATOS de la Base de Datos!");
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				main(null);
+			} else if (a.equals("no")) {
+				opcionesAvanzadas();
+			}
 		} while (a != "si" || a != "no");
 		scan.close();
 	}

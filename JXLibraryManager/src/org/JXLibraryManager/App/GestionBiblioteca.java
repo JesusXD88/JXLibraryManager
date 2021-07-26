@@ -354,6 +354,26 @@ public class GestionBiblioteca {
 	}
 	
 	/**
+	 * Método que elimina todos los datos de la base de datos
+	 * @return boolean
+	 */
+	public boolean truncateDB() {
+		String query = "DELETE FROM Biblioteca;";
+		String query2 = "DELETE FROM LibrosExtraidos;";
+		String query3 = "DELETE FROM Libros;";
+		try {
+			stmt.executeUpdate(query);
+			stmt.executeUpdate(query2);
+			stmt.executeUpdate(query3);
+		} catch (Exception e) {
+			System.out.println("No se ha podido eliminar la base de datos!");
+			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			return false;
+		}
+		return true;
+	}
+	
+	/**
 	 * Método toString.
 	 * Devuelve la tabla que genera el método mostrarBiblioteca.
 	 */
