@@ -18,6 +18,7 @@ Desde los menús se pueden visualizar las operaciones que se pueden realizar, ta
 * Realizar opciones avanzadas como eliminar todos los datos de la DB o código SQL.
 ## Compilación
 Este programa lo he estado desarrollando únicamente en EclipseIDE con sólamente los conocimientos que he ido adquiriendo durante 1º y 2º del grado de Ingeniería Informática. Por lo que puede que esta no sea la manera más óptima ni por asomo, pero es hasta lo que alcanzo hacer.
+
 Para importar el código en Eclipse (Desarrollado usando Eclipse 2021-06 (4.20.0)):
 1. Copiar la URL git del repo.
 2. En Eclipse dirigirse a File -> Import -> Import Projects From Git.
@@ -37,3 +38,9 @@ Para compilar y exportar el archivo ejecutable JAR:
 ## Documentación
 Puedes consultar la documentación a continuación:
 [Documentación JavaDoc](https://jesusxd88.github.io/JXLibraryManager/org/JXLibraryManager/App/package-summary.html "Documentación JavaDoc")
+## Diagramas
+Aquí podrás consultar los diagramas UML del programa y ER de la DB:
+
+https://github.com/JesusXD88/JXLibraryManager/blob/main/JXLibraryManager/Diagrams/JXLibraryManagerUML.png
+
+https://github.com/JesusXD88/JXLibraryManager/blob/main/JXLibraryManager/Diagrams/JXLM_DB.png
