@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import org.sqlite.SQLiteDataSource;
+
 import de.vandermeer.asciitable.AT_Cell;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciithemes.a8.A8_Grids;
@@ -34,6 +36,7 @@ public class GestionBiblioteca {
 	
 	private Connection con = null; //Objeto conexion
 	private Statement stmt = null; //Objeto statement
+	private SQLiteDataSource ds = new SQLiteDataSource(); //Objeto SQLiteDataSource
 	
 	/**
 	 * Constructor por defecto de GestionBiblioteca
@@ -50,7 +53,8 @@ public class GestionBiblioteca {
 		
 		try {
 			Class.forName("org.sqlite.JDBC");
-			con = DriverManager.getConnection("jdbc:sqlite:db/JXLM_DB.db");
+			ds.setUrl("jdbc:sqlite:JXLM_DB.db");
+			con = ds.getConnection();
 			stmt = con.createStatement();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
