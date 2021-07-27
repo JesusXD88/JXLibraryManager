@@ -97,7 +97,7 @@ public class Main {
 		Scanner scan = new Scanner(System.in);
 		int opcion2;
 		do {
-			System.out.println("---------------------------------------");
+			System.out.println("\n\n---------------------------------------");
 			System.out.println("\nOpción seleccionada: Gestionar los libros de la biblioteca (añadir/modificar/eliminar).");
 			System.out.println("\n\nSelecciona lo que hacer a continuación:\n");
 			System.out.println("1. Añadir libros a la biblioteca.");
@@ -403,6 +403,7 @@ public class Main {
 	public static void inventarioLibros() {
 		Scanner scan = new Scanner(System.in);
 		String tabla = library.mostrarInventario();
+		System.out.println("\n\n---------------------------------------\n\n");
 		if (tabla == null) {
 			System.out.println("\nNo existe ningún libro en el inventario todavía.\nPor favor, inserta primeramente un libro\n");
 			System.out.println("\n---------------------------------------\n\n");
@@ -436,6 +437,7 @@ public class Main {
 	public static void showBiblioteca() {
 		Scanner scan = new Scanner(System.in);
 		String biblioteca = library.toString();
+		System.out.println("\n\n---------------------------------------\n\n");
 		if (biblioteca == null) {
 			System.out.println("\nNo existe ningún libro en la biblioteca todavía.\nPor favor, inserta primeramente un libro\n");
 			System.out.println("\n---------------------------------------\n\n");
@@ -469,6 +471,7 @@ public class Main {
 	public static void showLibrosExtraidos() {
 		Scanner scan = new Scanner(System.in);
 		String extracted = library.mostrarLibrosExtraidos();
+		System.out.println("\n\n---------------------------------------\n\n");
 		if (extracted == null) {
 			System.out.println("\nNo existe ningún libro extraido todavía.\nPor favor, extrae primeramente un libro\n");
 			System.out.println("\n---------------------------------------\n\n");
@@ -607,6 +610,9 @@ public class Main {
 	 */
 	public static void eliminarDB() {
 		Scanner scan = new Scanner(System.in);
+		System.out.println();
+		System.out.println();
+		System.out.println("---------------------------------------");
 		System.out.println("\n\nVas a eliminar TODOS LOS DATOS de la Base de Datos. Esta acción es irreversible.");
 		String a;
 		do {
@@ -635,10 +641,12 @@ public class Main {
 	 */
 	public static void menuSQL() {
 		Scanner scan = new Scanner(System.in);
+		System.out.println();
+		System.out.println();
+		System.out.println("---------------------------------------");
 		System.out.println("\n\nPor favor, selecciona el tipo de statement SQL a ejecutar:\n");
-		System.out.println("1. INSERT, UPDATE, DELETE.");
-		System.out.println("2. Query SQL.\n");
-		System.out.println("3. Volver.");
+		System.out.println("1. INSERT, UPDATE, DELETE.\n");
+		System.out.println("2. Volver.");
 		
 		int opcion;
 		do {
@@ -656,9 +664,6 @@ public class Main {
 			executeUpdateSQL();
 			break;
 		case 2:
-			querySQL();
-			break;
-		case 3:
 			main(null);
 			break;
 		}
@@ -670,6 +675,9 @@ public class Main {
 	 */
 	public static void executeUpdateSQL() {
 		Scanner scan = new Scanner(System.in);
+		System.out.println();
+		System.out.println();
+		System.out.println("---------------------------------------");
 		System.out.println("\n\nPor favor, introduce a continuación la cadena SQL a ejecutar (INSERT, UPDATE, DELETE):");
 		System.out.print("\n=> ");
 		String query = scan.nextLine();
@@ -687,32 +695,6 @@ public class Main {
 		scan.close();
 	}
 	
-	/**
-	 * Método que se encarga de obtener por consola una query SQL
-	 */
-	public static void querySQL() {
-		Scanner scan = new Scanner(System.in);
-		System.out.println("\n\nPor favor, introduce a continuación la query SQL a ejecutar:");
-		System.out.print("\n=> ");
-		String query = scan.nextLine();
-		String resultado = library.mostrarQuerySQL(query);
-		if (resultado != null) {
-			System.out.println("El resultado de la query SQL se muestra a continuación:\n\n");
-			System.out.println(resultado);
-			String a;
-			do {
-				System.out.println("\n¿Volver?(si/no)");
-				System.out.print("=> ");
-				a = scan.nextLine();
-				if (a.equals("si")) {
-					menuSQL();
-				} 
-			} while (a != "si" || a != "no");
-		} else {
-			menuSQL();
-		}
-		scan.close();
-	}
 	
 	/**
 	 * Método de clase que sirve para verificar si un String determinado es un número
