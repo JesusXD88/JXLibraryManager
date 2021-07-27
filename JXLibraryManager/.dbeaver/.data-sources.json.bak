@@ -16,6 +16,25 @@
 			}
 		}
 	},
+	"virtual-models": {
+		"sqlite_jdbc-17aa45d1b11-1cce575e5aecac5e": {
+			":Libros": {
+				"properties": {
+					"erd.diagram.state": {
+						"serialized": "<diagram version=\"1\" name=\"Libros\" time=\"202107141138\"><entities><data-source id=\"sqlite_jdbc-17aa45d1b11-1cce575e5aecac5e\"><entity id=\"1\" name=\"Libros\" fq-name=\"Libros\" order=\"0\" color-bg=\"124,62,31\" border-width=\"3\" x=\"147\" y=\"91\"/></data-source></entities><relations/></diagram>"
+					}
+				},
+				"constraints": {}
+			},
+			":LibrosExtraidos": {
+				"properties": {
+					"erd.diagram.state": {
+						"serialized": "<diagram version=\"1\" name=\"LibrosExtraidos\" time=\"202107141154\"><entities><data-source id=\"sqlite_jdbc-17aa45d1b11-1cce575e5aecac5e\"><entity id=\"1\" name=\"LibrosExtraidos\" fq-name=\"LibrosExtraidos\" order=\"0\" color-bg=\"124,62,31\" x=\"18\" y=\"67\"/><entity id=\"2\" name=\"Libros\" fq-name=\"Libros\" order=\"1\" x=\"232\" y=\"34\"/></data-source></entities><relations><relation name=\"LibrosExtraidos_FK\" fq-name=\"LibrosExtraidos.LibrosExtraidos_FK\" type=\"fk\" pk-ref=\"2\" fk-ref=\"1\"/></relations></diagram>"
+					}
+				}
+			}
+		}
+	},
 	"connection-types": {
 		"dev": {
 			"name": "Development",

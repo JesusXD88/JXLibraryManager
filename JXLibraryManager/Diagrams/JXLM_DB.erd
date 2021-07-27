@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram version="1" name="JXLM_DB">
+	<entities>
+		<data-source id="sqlite_jdbc-17ae8adf168-7f0191e959f345fd">
+			<entity id="1" name="Biblioteca" fq-name="Biblioteca"/>
+			<entity id="2" name="Libros" fq-name="Libros"/>
+			<entity id="3" name="LibrosExtraidos" fq-name="LibrosExtraidos"/>
+		</data-source>
+	</entities>
+	<relations>
+		<relation name="Biblioteca_FK" fq-name="Biblioteca.Biblioteca_FK" type="fk" pk-ref="2" fk-ref="1"/>
+		<relation name="FK_LibrosExtraidos_Libros" fq-name="LibrosExtraidos.FK_LibrosExtraidos_Libros" type="fk" pk-ref="2" fk-ref="3"/>
+	</relations>
+</diagram>
