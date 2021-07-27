@@ -28,7 +28,9 @@ Para importar el código en Eclipse (Desarrollado usando Eclipse 2021-06 (4.20.0
    En la ventana de selección de archivo, navegar hasta la raíz del proyecto y dentro de la carpeta libs seleccionar el archivo correspondiente a dicha librería.
 7. Repetir el paso anterior para cada una de las librerías externas.
 8. Ejecutar la clase Main como Java Application.
+
 Para compilar y exportar el archivo ejecutable JAR:
+
 1. Click derecho sobre el proyecto -> Export -> Runnable JAR File. Seleccionar como launch configuration el Main, el archivo a guardar y seleccionar la opción de Extract required libraries into JAR.
 2. A continuación, copiar la base de datos que se encuentra en la raíz del proyecto a la misma carpeta del archivo JAR que se ha exportado. Si no el programa no funcionará.
 3. Ejecutar tal y como está explicado en el apartado de Instalación.
