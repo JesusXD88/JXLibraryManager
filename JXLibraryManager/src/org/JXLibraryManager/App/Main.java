@@ -565,6 +565,87 @@ public class Main {
 		scan.close();
 	}
 	
+	//Gestion de personas
+	
+	/**
+	 * Menú de Gestión de Personas
+	 */
+	public static void gestionarPersonas() {
+		Scanner scan = new Scanner(System.in);
+		System.out.println("\n\n---------------------------------------");
+		System.out.println("\nOpción seleccionada: Gestionar Personas (añadir/modificar/eliminar).");
+		System.out.println("\n\nSelecciona lo que hacer a continuación:\n");
+		System.out.println("1. Añadir personas.");
+		System.out.println("2. Modificar personas.");
+		System.out.println("3. Eliminar personas.");
+		System.out.println("4. Listar personas.\n");
+		System.out.println("5. Volver al menú principal.\n");
+		System.out.print("=> ");
+		
+		int opcion;
+		do {
+			try {
+				System.out.print("=> ");
+				opcion = Integer.parseInt(scan.nextLine());
+			} catch (Exception e) {
+				System.out.println("\nIntroduce un número válido\n");
+				opcion = 0;
+			}
+		} while (opcion < 1 || opcion > 5);
+		
+		switch (opcion) {
+		case 1:
+			anadirPersona();
+			break;
+		case 2:
+			modificarPersona();
+			break;
+		case 3:
+			eliminarPersona();
+			break;
+		case 2:
+			listarPersonas();
+			break;
+		case 5:
+			main(null);
+			break;
+		}
+		scan.close();
+	}
+	
+	/**
+	 * Método para añadir persona a la base de datos
+	 */
+	private static void anadirPersona() {
+		System.out.println();
+		System.out.println();
+		System.out.println("---------------------------------------");
+		Scanner scan = new Scanner(System.in);
+		System.out.println("\n\nIntroduce a continuación los datos de la persona a insertar:\n");
+		System.out.print("Nombre: ");
+		String nombre = scan.nextLine();
+		System.out.print("Apellidos: ");
+		String autor = scan.nextLine();
+		
+		Libro libro = new Libro (ISBN, nombre, autor, genero, tematica);
+		
+		System.out.println("\n\n\nEl libro a insertar es:\n");
+		System.out.println(libro.toString());
+		String ver;
+		do {
+			System.out.println("\n\n ¿Es correcta esta información? (si/no)\n");
+			System.out.print("=> ");
+			ver = scan.nextLine();
+			if (ver.equals("si")) {
+				library.insertarLibro(libro);
+				gestionarLibros();
+			} else if (ver.equals("no")) {
+				anadirLibro();
+			}
+		} while (ver != "si" || ver != "no");
+		scan.close();
+	}
+	
 	//Opciones Avanzadas
 	
 	/**

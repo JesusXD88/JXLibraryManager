@@ -299,7 +299,7 @@ public class GestionBiblioteca {
 	 * @return boolean
 	 */
 	public boolean extraerLibro(Libro libro) {
-		String query = "INSERT INTO LibrosExtraidos VALUES ((SELECT ISBN FROM Libros WHERE ISBN = " + libro.getISBN() + "), (SELECT FechaAnadido FROM Biblioteca WHERE ISBN = " + libro.getISBN() + "), DATETIME('now'));";
+		String query = "INSERT INTO LibrosExtraidos VALUES ((SELECT ISBN FROM Libros WHERE ISBN = " + libro.getISBN() + "), (SELECT FechaAnadido FROM Biblioteca WHERE ISBN = " + libro.getISBN() + "), DATETIME('now'), );";
 		String query2 = "DELETE FROM Biblioteca WHERE ISBN = (SELECT ISBN FROM Libros WHERE ISBN =" + libro.getISBN() + ");";
 		try {
 			stmt.executeUpdate(query);
