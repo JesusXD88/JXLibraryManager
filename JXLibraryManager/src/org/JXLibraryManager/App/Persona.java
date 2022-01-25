@@ -11,6 +11,15 @@ public class Persona implements Comparable<Persona> {
 	private String apellidos; //Apellidos
 	
 	/**
+	 * @param nombre Nombre(s)
+	 * @param apellidos Apellidos
+	 */
+	public Persona (String nombre, String apellidos) {
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+	}
+	
+	/**
 	 * @param idPersona El ID de la persona
 	 * @param nombre Nombre(s)
 	 * @param apellidos Apellidos

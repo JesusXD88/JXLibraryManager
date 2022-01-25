@@ -361,6 +361,27 @@ public class GestionBiblioteca {
 		return new Libro(ISBN, nombre, autor, genero, tematica);
 	}
 	
+	//Gestion de personas
+	
+	/**
+	 * Método que inserta una persona en la BD
+	 * @param persona
+	 * @return boolean
+	 */
+	public boolean insertarPersona(Persona persona) {
+		String nombre = persona.getNombre();
+		String apellidos = persona.getApellidos();
+		String query = "INSERT INTO Persona (Nombre, Apellidos) VALUES (" + nombre + ", " + apellidos + ");";
+		try {
+			stmt.executeUpdate(query);
+		} catch (Exception e) {
+			System.out.println("No se ha podido insertar la persona!");
+			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			return false;
+		}
+		return true;
+	}
+	
 	/**
 	 * Método que elimina todos los datos de la base de datos
 	 * @return boolean

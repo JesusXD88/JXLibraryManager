@@ -625,22 +625,22 @@ public class Main {
 		System.out.print("Nombre: ");
 		String nombre = scan.nextLine();
 		System.out.print("Apellidos: ");
-		String autor = scan.nextLine();
+		String apellidos = scan.nextLine();
 		
-		Libro libro = new Libro (ISBN, nombre, autor, genero, tematica);
+		Persona persona = new Persona(nombre, apellidos);
 		
-		System.out.println("\n\n\nEl libro a insertar es:\n");
-		System.out.println(libro.toString());
+		System.out.println("\n\n\nLa persona a insertar es:\n");
+		System.out.println(persona.toString());
 		String ver;
 		do {
 			System.out.println("\n\n ¿Es correcta esta información? (si/no)\n");
 			System.out.print("=> ");
 			ver = scan.nextLine();
 			if (ver.equals("si")) {
-				library.insertarLibro(libro);
+				library.insertarPersona(persona);
 				gestionarLibros();
 			} else if (ver.equals("no")) {
-				anadirLibro();
+				gestionarPersonas();
 			}
 		} while (ver != "si" || ver != "no");
 		scan.close();
